@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="status">
+        <button id="roll" style="width: 100px; height: 30px;">Roll</button>
+        <div id="dice"></div>
+    </div>
+    <div id="board"> <div id="win"><div id="close">x</div><p>Congratulations 🎉🎉<br>You won</p></div></div>
+    <div id="player1"></div>
+   
+
+    <script>
+        let Q = 0;
+        let p = 0;
+        let specialCells = {
+           4:16,
+           14:27,
+           37:57,
+           64:76
+        }
+        document.getElementById('roll').addEventListener(
+            'click', () => {
+                p = 1 + Math.floor(Math.random() * 6);
+                setTimeout(
+                    () => { document.getElementById('dice').innerText = `${p}` }, 1050
+                )
+                setTimeout(
+                    () => { document.getElementById('dice').classList.add("rollAnimation") }, 50
+                )
+
+            })
+        document.getElementById('dice').addEventListener(
+            "animationend", () => {
+                document.getElementById('dice').classList.remove("rollAnimation");
+                let target = Q + p;
+                if (target > 100) { target = target - p }
+                if(target == 100){document.getElementById('win').style.display = "flex"}
+                let step = Q + 1;
+                const board = document.getElementById('board');
+                const player1 = document.getElementById('player1');
+                const moveInterval = setInterval(() => {
+                    if (step > target) {
+                        clearInterval(moveInterval);
+                        Q = step - 1;
+                        if (specialCells[Q]) {
+                            const jumpTo = specialCells[Q];
+                            setTimeout(
+                                () => {
+                                    player1.style.display = "block";
+                                    board.querySelectorAll(".cell")[jumpTo - 1].appendChild(player1);
+                                    player1.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "center",
+                                    })
+                                    Q = jumpTo;
+                                }, 300
+                            )
+
+                        }
+                        return;
+                    }
+                    player1.style.display = "block";
+                    board.querySelectorAll(".cell")[step - 1].appendChild(player1);
+                    player1.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                        inline: "center"
+                    }); step++
+                }, 300)
+            })
+        let path = [];
+        for (let i = 0; i < 100; i++) {
+            let cols = 10;
+            let col = i % 10;
+            let row = Math.floor(i / cols);
+            if (row % 2 === 1) { col = cols - 1 - col }
+            path.push({ x: col * 10, y: i * 50 })
+        }
+        path.forEach(
+            (p, i) => {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.style.left = `${p.x}%`;
+                if ((i + 1) % 10 === 0) { cell.style.top = `${(i * 50) - 25}px` }
+                else if ((i + 1) % 10 === 1) { cell.style.top = `${(i * 50) + 25}px` }
+                else { cell.style.top = `${p.y}px`; }
+                cell.textContent = i + 1;
+                document.getElementById('board').appendChild(cell);
+            })
+            document.getElementById('close').addEventListener(
+                'click', ()=> {document.getElementById('win').style.display = "none"}
+            )
+
+    </script>
+</body>
+
+</html>
