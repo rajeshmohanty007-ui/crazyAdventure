@@ -74,6 +74,7 @@
                         }
                         return;
                     }
+                    player1.style.display = "block";
                     board.querySelectorAll(".cell")[step - 1].appendChild(player1);
                     player1.scrollIntoView({
                         behavior: "smooth",
@@ -81,7 +82,6 @@
                         inline: "center"
                     }); step++
                 }, 300)
-                 document.getElementById('roll').style.display = "block";
             })
         let path = [];
         for (let i = 0; i < 100; i++) {
