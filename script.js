@@ -13,6 +13,7 @@
            document.body.appendChild(player);
         }
         let motion = false; 
+        let currentTurn = 0;
         let p = 0;
         let specialCells = {
             4: 17,
@@ -22,8 +23,17 @@
         }
         const dice = document.getElementById('dice');
         const rollBtn = document.getElementById('roll');
-
-
+        function nextTurn(){
+              if(p != 6) {currentTurn = (currentTurn+1)%players.length}
+              scroll()
+        }
+        function scroll() {
+             const currentPlayer = document.getElementById(players[currentTurn].id);
+              currentPlayer.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "center",
+                                        })
+        }
         function diceRoll() {
              p = 1 + Math.floor(Math.random() * 6);
              
@@ -35,15 +45,15 @@
                     )
                 }
         function movement() {
-                  let Q = players[0].position
+                  let Q = players[currentTurn].position
                     document.getElementById('dice').classList.remove("rollAnimation");
                     let target = Q + p;
                     if (target > 100) { target = target - p }
                     if (target == 100) { document.getElementById('win').style.display = "flex" }
                     let step = Q + 1;
                     const board = document.getElementById('board');
-                    const player1 = document.getElementsByClassName('player');
-                     player1[0].style.display = "block";
+                    const currentPlayer = document.getElementById(players[currentTurn].id);
+                    currentPlayer.style.display = "block";
                     const moveInterval = setInterval(() => {
                         if (step > target) {
                             clearInterval(moveInterval);
@@ -52,25 +62,20 @@
                                 const jumpTo = specialCells[Q];
                                 setTimeout(
                                     () => {
-                                        player1[0].style.display = "block";
-                                        board.querySelectorAll(".cell")[jumpTo - 1].appendChild(player1[0]);
-                                        player1[0].scrollIntoView({
-                                            behavior: "smooth",
-                                            block: "center",
-                                        })
-                                        Q = jumpTo;
-                                        players[0].position = Q
+                                        currentPlayer.style.display = "block";
+                                        board.querySelectorAll(".cell")[jumpTo - 1].appendChild(currentPlayer);
+                                       scroll()
+                                        players[currentTurn].position = jumpTo;
+                                        nextTurn()
                                     }, 300
                                 )
-                                  }players[0].position = Q
+                                  }
+                               else {players[currentTurn].position = Q
+                                nextTurn()}
                             return;
                         }
-                        board.querySelectorAll(".cell")[step - 1].appendChild(player1[0]);
-                        player1[0].scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                            inline: "center"
-                        }); step++
+                        board.querySelectorAll(".cell")[step - 1].appendChild(currentPlayer);
+                        scroll(); step++
                     }, 300)
                    
                 }
