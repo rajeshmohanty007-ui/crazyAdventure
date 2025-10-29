@@ -37,7 +37,12 @@
 .rollAnimation {
     animation: roll 1.5s ease-in-out;
 }
-
+#name{
+    background-color: orange;
+    height: 100%;
+    width: auto;
+    padding: 5px;
+}
 #board {
     background-color: rgb(76, 87, 203);
     position: relative;
@@ -67,15 +72,16 @@
     }
 }
 
-#player1 {
+.player {
     height: 50px;
     width: 50px;
-    background-color: rgba(255, 0, 0, 0.416);
+    opacity: 0.8;
     border-radius: 25px;
     display: none;
     position: absolute;
     top: 25px;
     left: 25px;
+    z-index: 20;
 }
 #win {
     height: 50vh;
