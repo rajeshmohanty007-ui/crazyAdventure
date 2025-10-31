@@ -4,7 +4,7 @@
             { id: "P3", name: "player 3", position: 0 },
             { id: "P4", name: "player 4", position: 0 }
         ]
-      const  colors = ["red","green","blue","aqua"]
+      const  colors = ["red","rgb(104 236 52)","blue","aqua"]
         for(let i = 0; i < players.length; i++){
            const player = document.createElement("div");
            player.classList.add("player")
@@ -23,9 +23,13 @@
         }
         const dice = document.getElementById('dice');
         const rollBtn = document.getElementById('roll');
+         document.getElementById('name').innerText = `${players[currentTurn].name}'s turn`
         function nextTurn(){
               if(p != 6) {currentTurn = (currentTurn+1)%players.length}
               scroll()
+               document.querySelectorAll(".player").forEach(i => {i.classList.remove('HL')})
+               document.getElementById(players[currentTurn].id).classList.add('HL')
+               document.getElementById('name').innerText = `${players[currentTurn].name}'s turn`
         }
         function scroll() {
              const currentPlayer = document.getElementById(players[currentTurn].id);
@@ -49,7 +53,9 @@
                     document.getElementById('dice').classList.remove("rollAnimation");
                     let target = Q + p;
                     if (target > 100) { target = target - p }
-                    if (target == 100) { document.getElementById('win').style.display = "flex" }
+                    if (target == 100) { document.getElementById('win').style.display = "flex"
+                        document.getElementById(players[currentTurn].remove())
+                     }
                     let step = Q + 1;
                     const board = document.getElementById('board');
                     const currentPlayer = document.getElementById(players[currentTurn].id);
