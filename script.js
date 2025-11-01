@@ -15,11 +15,17 @@
         let motion = false; 
         let currentTurn = 0;
         let p = 0;
-        let specialCells = {
+        let pipe = {
             4: 17,
             14: 27,
             37: 57,
-            65: 76
+            65: 76,
+            88: 93,
+        }
+        let bubbles = {
+              48: 33,
+            78: 63,
+            96: 85
         }
         const dice = document.getElementById('dice');
         const rollBtn = document.getElementById('roll');
@@ -54,7 +60,8 @@
                     let target = Q + p;
                     if (target > 100) { target = target - p }
                     if (target == 100) { document.getElementById('win').style.display = "flex"
-                        document.getElementById(players[currentTurn].remove())
+                        document.getElementById(players[currentTurn].id).remove();
+                        players.splice(currentTurn, 1);
                      }
                     let step = Q + 1;
                     const board = document.getElementById('board');
@@ -64,8 +71,10 @@
                         if (step > target) {
                             clearInterval(moveInterval);
                             Q = step - 1;
-                            if (specialCells[Q]) {
-                                const jumpTo = specialCells[Q];
+                            if (pipe[Q] || bubbles[Q]) {
+                                let jumpTo
+                              if(pipe[Q]) {jumpTo = pipe[Q];}
+                              if(bubbles[Q]) {jumpTo =bubbles[Q];}
                                 setTimeout(
                                     () => {
                                         currentPlayer.style.display = "block";
@@ -109,8 +118,11 @@
                 cell.textContent = i + 1;
                 document.getElementById('board').appendChild(cell);
             })
-        Object.keys(specialCells).forEach((i) => {
+        Object.keys(pipe).forEach((i) => {
             document.querySelectorAll('.cell')[i - 1].style.backgroundColor = "green";
+        })
+        Object.keys(bubbles).forEach((i) => {
+            document.querySelectorAll('.cell')[i - 1].style.backgroundColor = "orange";
         })
         document.getElementById('close').addEventListener(
             'click', () => { document.getElementById('win').style.display = "none" }
