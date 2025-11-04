@@ -4,7 +4,7 @@
             { id: "P3", name: "player 3", position: 0 },
             { id: "P4", name: "player 4", position: 0 }
         ]
-      const  colors = ["red","rgb(104 236 52)","blue","aqua"]
+      const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
         for(let i = 0; i < players.length; i++){
            const player = document.createElement("div");
            player.classList.add("player")
@@ -59,10 +59,6 @@
                     document.getElementById('dice').classList.remove("rollAnimation");
                     let target = Q + p;
                     if (target > 100) { target = target - p }
-                    if (target == 100) { document.getElementById('win').style.display = "flex"
-                        document.getElementById(players[currentTurn].id).remove();
-                        players.splice(currentTurn, 1);
-                     }
                     let step = Q + 1;
                     const board = document.getElementById('board');
                     const currentPlayer = document.getElementById(players[currentTurn].id);
@@ -86,6 +82,10 @@
                                 )
                                   }
                                else {players[currentTurn].position = Q
+                                 for(let i = players.length - 1;i >= 0; i--){
+            if (players[i].position == 100) { document.getElementById('win').style.display = "flex"
+                        document.getElementById(players[i].id).style.display = "none";
+                        players.splice(currentTurn, 1);}}
                                 nextTurn()}
                             return;
                         }
@@ -127,3 +127,4 @@
         document.getElementById('close').addEventListener(
             'click', () => { document.getElementById('win').style.display = "none" }
         )
+        
