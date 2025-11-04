@@ -4,14 +4,6 @@
             { id: "P3", name: "player 3", position: 0 },
             { id: "P4", name: "player 4", position: 0 }
         ]
-      const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
-        for(let i = 0; i < players.length; i++){
-           const player = document.createElement("div");
-           player.classList.add("player")
-           player.style.backgroundColor = colors[i]
-           player.id = players[i].id;
-           document.body.appendChild(player);
-        }
         let motion = false; 
         let currentTurn = 0;
         let p = 0;
@@ -118,6 +110,14 @@
                 cell.textContent = i + 1;
                 document.getElementById('board').appendChild(cell);
             })
+            const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
+        for(let i = 0; i < players.length; i++){
+           const player = document.createElement("div");
+           player.classList.add("player")
+           player.style.backgroundColor = colors[i]
+           player.id = players[i].id;
+           document.getElementById('board').querySelectorAll(".cell")[0].appendChild(player);
+        }
         Object.keys(pipe).forEach((i) => {
             document.querySelectorAll('.cell')[i - 1].style.backgroundColor = "green";
         })
