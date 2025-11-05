@@ -1,9 +1,10 @@
  let players = [
-            { id: "P1", name: "player 1", position: 0 },
-            { id: "P2", name: "player 2", position: 0 },
-            { id: "P3", name: "player 3", position: 0 },
-            { id: "P4", name: "player 4", position: 0 }
+            { id: "P1", name: "Player 1", position: 0 },
+            { id: "P2", name: "Player 2", position: 0 },
+            { id: "P3", name: "Player 3", position: 0 },
+            { id: "P4", name: "Player 4", position: 0 }
         ]
+          const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
         let motion = false; 
         let currentTurn = 0;
         let p = 0;
@@ -28,6 +29,7 @@
                document.querySelectorAll(".player").forEach(i => {i.classList.remove('HL')})
                document.getElementById(players[currentTurn].id).classList.add('HL')
                document.getElementById('name').innerText = `${players[currentTurn].name}'s turn`
+               document.getElementById('name').style.backgroundColor = colors[currentTurn];
         }
         function scroll() {
              const currentPlayer = document.getElementById(players[currentTurn].id);
@@ -107,10 +109,9 @@
                 if ((i + 1) % 10 === 0) { cell.style.top = `${(i * 50) - 25}px` }
                 else if ((i + 1) % 10 === 1) { cell.style.top = `${(i * 50) + 25}px` }
                 else { cell.style.top = `${p.y}px`; }
-                cell.textContent = i + 1;
+                cell.innerHTML = `<p class = "number">${i+1}</p>`;
                 document.getElementById('board').appendChild(cell);
             })
-            const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
         for(let i = 0; i < players.length; i++){
            const player = document.createElement("div");
            player.classList.add("player")
