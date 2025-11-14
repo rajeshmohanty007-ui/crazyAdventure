@@ -4,7 +4,7 @@
             { id: "P3", name: "Player 3", position: 0 },
             { id: "P4", name: "Player 4", position: 0 }
         ]
-          const colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
+          let colors = ["#B71C1C", "#1565C0", "#2E7D32", "#4A148C"];
         let motion = false; 
         let currentTurn = 0;
         let p = 0;
@@ -77,9 +77,13 @@
                                   }
                                else {players[currentTurn].position = Q
                                  for(let i = players.length - 1;i >= 0; i--){
-            if (players[i].position == 100) { document.getElementById('win').style.display = "flex"
+            if (players[i].position == 100) { 
+                        document.getElementById('winPlayer').innerText = `${players[currentTurn].name}`
+                        document.getElementById('win').style.display = "flex";
                         document.getElementById(players[i].id).style.display = "none";
-                        players.splice(currentTurn, 1);}}
+                        players.splice(currentTurn, 1);
+                        colors.splice(currentTurn, 1);
+                        currentTurn--;}}
                                 nextTurn()}
                             return;
                         }
