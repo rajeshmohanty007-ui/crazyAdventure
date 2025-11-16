@@ -10,6 +10,17 @@
 </head>
 
 <body>
+    <div id="overlay"></div>
+    <div id="start">
+        <div id="start1" class="spop">
+             <p class="p1">Enter number of players ( 2 - 5 )</p>
+            <input type="number" id="numberOfPlayers" class="s1">
+            <button onclick="getNum()" class="s1">Ok</button>
+            <P id="message"></P>
+        </div>
+        <div id="start2" class="spop" style="display: none;">
+        </div>
+    </div>
     <div id="status">
         <div style="display: flex; justify-content: center; align-items: center;">
             <button id="roll" style="width: 100px; height: 30px;">Roll</button>
@@ -27,5 +38,10 @@
                 <li>Thank you for playing</li>
             </ul>
         </div>
+    </div>
+    <div id="endScreen" class="flex">
+        <ul class="flex" id="winList">
+            <li class="WL tli">Game Completed</li>
+        </ul>
     </div>
 </html>
